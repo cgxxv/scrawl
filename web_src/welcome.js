@@ -1,15 +1,15 @@
 import logo from './logo.svg?url';
 import Logo from "./logo.svg";
-import './App.css';
+import './welcome.css';
 
-function App() {
+const Welcome = () => {
   return (
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <Logo />
         <p>
-          Edit <code>src/App.js</code> and save to reload.
+          Edit <code>web_src/welcome.js</code> and save to reload.
         </p>
         <a
           className="App-link"
@@ -24,4 +24,4 @@ function App() {
   );
 }
 
-export default App;
+export default Welcome;
