@@ -28,6 +28,9 @@ target/
 build/
 !**/src/main/**/build/
 !**/src/test/**/build/
+/public/css
+/public/js
+/node_modules
 
 ### VS Code ###
 .vscode/
