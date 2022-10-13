@@ -14,6 +14,9 @@ insert_final_newline = true
 indent_size = 4
 max_line_length = 80
 
+[*.java]
+indent_size = 4
+
 # The JSON files contain newlines inconsistently
 [*.json]
 insert_final_newline = ignore

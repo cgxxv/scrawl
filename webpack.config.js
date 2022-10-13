@@ -1,7 +1,7 @@
 const path = require("path");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
-const {SourceMapDevToolPlugin, ProvidePlugin} = require("webpack");
+const { SourceMapDevToolPlugin, ProvidePlugin } = require("webpack");
 
 const config = {
   entry: {
@@ -14,11 +14,19 @@ const config = {
   devServer: {
     compress: true,
     port: 9000,
-    open: true,
+    // open: true,
     proxy: {
-      "/api": "http://localhost:8088",
+      '/api': {
+        target: "http://localhost:8088",
+        pathRewrite: { '^/api': '' },
+      },
     },
-    historyApiFallback: true,
+    // historyApiFallback: true,
+    historyApiFallback: {
+      rewrites: [
+        { from: /^(?!\/api).*/, to: './public/index.html' },
+      ],
+    },
   },
   module: {
     rules: [
@@ -29,10 +37,10 @@ const config = {
           {
             loader: "babel-loader",
             options: {
-              presets: [["@babel/preset-react", {runtime: "automatic"}]]
-            }
-          }
-        ]
+              presets: [["@babel/preset-react", { runtime: "automatic" }]],
+            },
+          },
+        ],
       },
       {
         test: /.css$/i,
@@ -44,27 +52,27 @@ const config = {
             loader: "css-loader",
             options: {
               sourceMap: true,
-            }
-          }
-        ]
+            },
+          },
+        ],
       },
       {
         test: /\.svg$/i,
-        type: 'asset',
+        type: "asset",
         resourceQuery: /url/, // *.svg?url
       },
       {
         test: /\.svg$/,
         issuer: /\.[jt]sx?$/,
-        resourceQuery: {not: [/url/]}, // exclude react component if *.svg?url
+        resourceQuery: { not: [/url/] }, // exclude react component if *.svg?url
         use: [
           {
             loader: "@svgr/webpack",
-            options: {icon: true},
-          }
-        ]
-      }
-    ]
+            options: { icon: true },
+          },
+        ],
+      },
+    ],
   },
   plugins: [
     new MiniCssExtractPlugin({
@@ -76,19 +84,19 @@ const config = {
       include: ["js/index.js", "css/index.css"],
     }),
     new HtmlWebpackPlugin({
-      template: './public/index.html',
-      filename: 'index.html',
+      template: "./public/index.html",
+      filename: "index.html",
     }),
     new ProvidePlugin({
       process: "process/browser.js",
-    })
+    }),
   ],
   performance: {
     hints: false,
     maxEntrypointSize: Infinity,
     maxAssetSize: Infinity,
-  }
-}
+  },
+};
 
 module.exports = (env, argv) => {
   if (argv.mode === "development") {
@@ -102,4 +110,4 @@ module.exports = (env, argv) => {
   }
 
   return config;
-}
+};

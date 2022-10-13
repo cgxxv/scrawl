@@ -1,9 +1,11 @@
 import React from "react";
 import {Routes, Route} from "react-router-dom";
-import axiosWrapper from "./axios-wrapper";
+
+import {axiosWrapper} from "./utils";
 import {SWRConfig} from "swr";
 import {AppContextProvider} from "./context";
 import Welcome from "./welcome";
+import Todo from "./todo";
 
 const swrConfig = {
   fetcher: async (url) => axiosWrapper(url, { method: 'GET' }),
@@ -17,8 +19,8 @@ const App = () => {
       <SWRConfig value={swrConfig}>
         <AppContextProvider>
           <Routes>
-            <Route path="/" element={<p>Hello world.</p>} />
-            <Route path="/todos/*" element={<p>todos</p>} />
+            <Route path="/" element={<Todo />} />
+            <Route path="/hello" element={<p>Hello world.</p>} />
             <Route path="/welcome" element={<Welcome />} />
           </Routes>
         </AppContextProvider>

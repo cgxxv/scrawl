@@ -1,4 +1,5 @@
 import axios from "axios";
+import useSWR from "swr";
 
 import {token, instance} from "./_constants";
 
@@ -27,4 +28,17 @@ const axiosWrapper = async (url, options) => {
   }
 }
 
-export default axiosWrapper;
+const useSWRBase = (url) => {
+  const { data, error, mutate } = useSWR(url, axiosWrapper);
+  return {
+    data,
+    mutate,
+    isError: error,
+    isLoading: !error && !data,
+  }
+}
+
+export {
+  axiosWrapper,
+  useSWRBase,
+};

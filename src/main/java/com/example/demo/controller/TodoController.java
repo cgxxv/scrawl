@@ -17,6 +17,7 @@ public class TodoController {
         Todo t = new Todo();
         t.setTitle(title);
         t.setDescription(description);
+        t.setStatus(Todo.Status.Pending);
         todoRepository.save(t);
         return "OK";
     }
