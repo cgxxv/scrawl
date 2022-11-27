@@ -5,31 +5,39 @@ const { SourceMapDevToolPlugin, ProvidePlugin } = require("webpack");
 
 const config = {
   entry: {
-    index: "./web_src/index.js",
+    index: "./web_src/index.tsx",
   },
   output: {
     path: path.resolve(__dirname, "public"),
     filename: "js/[name].js",
+  },
+  resolve: {
+    extensions: [".tsx", ".ts", ".js"],
   },
   devServer: {
     compress: true,
     port: 9000,
     // open: true,
     proxy: {
-      '/api': {
+      "/api": {
         target: "http://localhost:8088",
-        pathRewrite: { '^/api': '' },
+        pathRewrite: { "^/api": "" },
       },
     },
     // historyApiFallback: true,
     historyApiFallback: {
       rewrites: [
-        { from: /^(?!\/api).*/, to: './public/index.html' },
+        { from: /^(?!\/api).*/, to: "./public/index.html" },
       ],
     },
   },
   module: {
     rules: [
+      {
+        test: /\.tsx?$/,
+        loader: "ts-loader",
+        exclude: /node_modules/,
+      },
       {
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,

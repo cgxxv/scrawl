@@ -1,6 +1,6 @@
-import {createContext, useState} from "react";
+import { createContext, useState } from "react";
 
-const AppContext = createContext();
+const AppContext = createContext({});
 
 const initialValue = {};
 
